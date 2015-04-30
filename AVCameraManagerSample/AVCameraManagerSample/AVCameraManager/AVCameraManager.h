@@ -13,11 +13,8 @@
 
 @optional
 -(void)didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL error:(NSError *)error;
-//@optional
-//-(void)videoFrameUpdate:(CGImageRef)cgImage from:(CameraManager*)manager;
 @end
 
-//////////////////////////////////////////////////
 @interface AVCameraManager : NSObject
 <
 AVCaptureFileOutputRecordingDelegate,
@@ -38,17 +35,16 @@ AVCaptureVideoDataOutputSampleBufferDelegate
 typedef void (^takePictureHandler)(UIImage *image, NSError *error);
 
 @property(nonatomic, assign) id <AVCameraManagerDelegate> delegate;
-@property (nonatomic, readonly) BOOL isRecording;
+@property(nonatomic, readonly) BOOL isRecording;
+@property(nonatomic, retain) AVCaptureVideoPreviewLayer *previewLayer;
+@property(nonatomic, retain) AVCaptureDevice *backCameraDevice;
+@property(nonatomic, retain) AVCaptureDevice *frontCameraDevice;
+@property(nonatomic, retain) UIImage *videoImage;
+@property(nonatomic) UIDeviceOrientation videoOrientaion;
+@property(nonatomic, retain) AVCaptureMovieFileOutput *fileOutput;
+@property(nonatomic, retain) AVCaptureDeviceFormat *defaultFormat;
 
-@property AVCaptureVideoPreviewLayer* previewLayer;
-@property AVCaptureDevice*            backCameraDevice;
-@property AVCaptureDevice*            frontCameraDevice;
-@property UIImage*                    videoImage;
-@property UIDeviceOrientation         videoOrientaion;
-
-@property AVCaptureMovieFileOutput*   fileOutput;
-@property AVCaptureDeviceFormat*      defaultFormat;
-
+#pragma mark - Initializer
 - (id)init;
 - (id)initWithPreset:(NSString*)preset;
 - (void)setUpPreviewlayer:(UIView*)view;
@@ -80,9 +76,5 @@ typedef void (^takePictureHandler)(UIImage *image, NSError *error);
 -(AVCaptureDevice *)audioDevice;
 + (CGImageRef)imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer;
 + (UIImage*)rotateImage:(UIImage*)image angle:(int)angle;
-/*
-- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection;
-- (void)captureOutput:(AVCaptureFileOutput *)captureOutput didStartRecordingToOutputFileAtURL:(NSURL *)fileURL fromConnections:(NSArray *)connections;
-- (void)captureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error;
-*/
+
 @end
